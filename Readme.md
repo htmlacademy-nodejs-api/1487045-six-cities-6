@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Сергей Котельников](https://up.htmlacademy.ru/nodejs-api/6/user/1487045).
-* Наставник: `Неизвестно`.
+- Студент: [Сергей Котельников](https://up.htmlacademy.ru/nodejs-api/6/user/1487045).
+- Наставник: [Rail Sakhaviev](https://htmlacademy.ru/profile/id1331891).
 
 ---
 
