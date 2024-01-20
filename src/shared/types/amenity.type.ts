@@ -1,4 +1,4 @@
-export type Amenities =
+export type Amenity =
   | 'Breakfast'
   | 'Air conditioning'
   | 'Laptop friendly workspace'

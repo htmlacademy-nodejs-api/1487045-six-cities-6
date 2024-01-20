@@ -1,4 +1,4 @@
-export * from './amenities.type.js';
+export * from './amenity.type.js';
 export * from './city.enum.js';
 export * from './location.type.js';
 export * from './offer-type.enum.js';

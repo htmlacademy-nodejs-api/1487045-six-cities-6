@@ -1,4 +1,4 @@
-import { Amenities } from './amenities.type.js';
+import { Amenity } from './amenity.type.js';
 import { City } from './city.enum.js';
 import { Location } from './location.type.js';
 import { OfferType } from './offer-type.enum.js';
@@ -18,7 +18,7 @@ export type Offer = {
   bedrooms: number;
   guests: number;
   price: number;
-  amenities: Amenities[];
+  amenities: Amenity[];
   author: User;
   commentsAmount: number;
   location: Location;
