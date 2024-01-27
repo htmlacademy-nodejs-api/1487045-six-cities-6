@@ -1,0 +1,125 @@
+{
+  "api": {
+    "titles": [
+      "The Grand Imperial",
+      "Ocean Breeze Resort",
+      "Mountain View Lodge",
+      "Forest Hills Hotel",
+      "Sunny Shores Inn",
+      "Lakefront Retreat",
+      "Hilltop Haven",
+      "Cozy Creekside Cabins",
+      "Paradise Palms",
+      "Beachfront Suites"
+    ],
+    "descriptions": [
+      "Cozy mountain hotel with views of picturesque mountains. The hotel has a local cuisine restaurant, spa and swimming pool. Nearby there are trails for hiking and cycling routes. Ideal for active recreation in nature.",
+      "Modern hotel in the business center of the city. Surrounded by company offices, shopping centers and restaurants. The hotel has a 24-hour fitness center, restaurant and bar. Spacious rooms with panoramic windows. The perfect option for business trips.",
+      "Boutique hotel in a historic building in the heart of the city. Main attractions and museums are nearby. Interiors are in a classic style, exquisite cuisine in the restaurant. Ideal for educational recreation.",
+      "Small family hotel on the seafront. Cozy rooms, private beach, swimming pool, playroom. Nearby there is a water park and dolphinarium. Ideal for families with children.",
+      "Urban design hotel steps from theaters, museums, parks. City views, rooftop lounge, locally-sourced dining. Perfect home base to explore the city.",
+      "Luxury premium hotel with panoramic ocean views. Exquisite interiors, Michelin restaurant, spa center with saunas and pools. Everything for comfortable and unforgettable vacation.",
+      "Eco-lodge deep in the rainforest. Bungalows on stilts, outdoor showers, hammocks. Hiking, biking, birdwatching, relaxing in nature.",
+      "Seaside family resort with kids club, waterpark, playgrounds. Bright rooms, on-site restaurants. Nearby are beaches, trails, entertainment. Great for families.",
+      "Beachfront hotel with oceanview rooms and suites. Fine dining, pools, water sports, spa. Near golf, tennis, trails, shopping. Great for an indulgent escape.",
+      "Hotel in the heart of the old town. The perfect place for a romantic getaway and travels. Many attractions, restaurants and shops nearby. The hotel has a restaurant overlooking the river, a spa and fitness center. Rooms are decorated in a modern style, with panoramic windows and all amenities. Friendly staff, always ready to help organize tours and leisure time. The perfect place for an unforgettable vacation!"
+    ],
+    "cities": [
+      {
+        "name": "Paris",
+        "location": { "latitude": 48.85661, "longitude": 2.351499 }
+      },
+      {
+        "name": "Cologne",
+        "location": { "latitude": 50.938361, "longitude": 6.959974 }
+      },
+      {
+        "name": "Brussels",
+        "location": { "latitude": 50.846557, "longitude": 4.351697 }
+      },
+      {
+        "name": "Amsterdam",
+        "location": { "latitude": 52.370216, "longitude": 4.895168 }
+      },
+      {
+        "name": "Hamburg",
+        "location": { "latitude": 53.550341, "longitude": 10.000654 }
+      },
+      {
+        "name": "Dusseldorf",
+        "location": { "latitude": 51.225402, "longitude": 6.776314 }
+      }
+    ],
+    "previewImages": [
+      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&h=400&q=80"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
+      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
+      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1455587734955-081b22074882?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+    ],
+    "types": ["Apartment", "House", "Room", "Hotel"],
+    "amenities": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Washer",
+      "Towels",
+      "Fridge"
+    ],
+    "authors": [
+      {
+        "name": "John Smith",
+        "email": "john@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "password": "password1",
+        "type": "Pro"
+      },
+      {
+        "name": "Sarah Johnson",
+        "email": "sarah@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "password": "password2",
+        "type": "Normal"
+      },
+      {
+        "name": "Michael Lee",
+        "email": "michaellee@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+        "password": "password3",
+        "type": "Normal"
+      },
+      {
+        "name": "Jessica Wilson",
+        "email": "jessica@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
+        "password": "password4",
+        "type": "Pro"
+      },
+      {
+        "name": "David Martinez",
+        "email": "david@gmail.com",
+        "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
+        "password": "password4",
+        "type": "Pro"
+      }
+    ]
+  }
+}
