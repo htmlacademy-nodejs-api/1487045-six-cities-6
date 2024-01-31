@@ -11,4 +11,5 @@ coverage
 *.log
 
 /mocks/*.tsv
+/logs/*.log
 .env
