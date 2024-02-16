@@ -1,8 +1,9 @@
 import { DocumentType, types } from '@typegoose/typegoose';
 import { Logger } from '../../libs/logger/index.js';
-import { Component } from '../../types/index.js';
+import { Component, SortType } from '../../types/index.js';
 import { CreateOfferDto, OfferEntity, OfferService, UpdateOfferDto } from './index.js';
 import { inject, injectable } from 'inversify';
+import { DEFAULT_OFFER_COUNT, DEFAULT_PREMIUM_OFFER_COUNT } from './offer.constant.js';
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -23,8 +24,13 @@ export class DefaultOfferService implements OfferService {
     return this.offerModel.findById(offerId).exec();
   }
 
-  public async findAll(limit: number): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel.find().limit(limit).populate('authorId').exec();
+  public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find()
+      .limit(limit)
+      .sort({ publishDate: SortType.Down })
+      .populate('authorId')
+      .exec();
   }
 
   public async updateById(
@@ -56,4 +62,14 @@ export class DefaultOfferService implements OfferService {
   }
 
   //TODO findPremiumOffers
+  public async findPremiumOffers(
+    cityId: number,
+    limit = DEFAULT_PREMIUM_OFFER_COUNT
+  ): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ isPremium: true, cityId })
+      .limit(limit)
+      .sort({ publishDate: SortType.Down })
+      .exec();
+  }
 }
