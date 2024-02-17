@@ -5,13 +5,12 @@ export interface OfferService {
   create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
   findById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
 
-  findAll(limit: number): Promise<DocumentType<OfferEntity>[]>;
+  findAll(limit?: number): Promise<DocumentType<OfferEntity>[]>;
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null>;
-  findPremiumOffers(cityId: number, limit: number): Promise<DocumentType<OfferEntity>[]>;
+  findPremiumOffers(cityId: number, limit?: number): Promise<DocumentType<OfferEntity>[]>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
 }
 
-// ? получение офферов, добавленных в избранное?
-// ? Добавление/удаление оффера в/из избранное
+// TODO:  Добавление/удаление оффера в/из избранное ?

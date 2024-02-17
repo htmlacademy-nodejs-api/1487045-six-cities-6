@@ -25,11 +25,43 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
+    // return this.offerModel
+    //   .find()
+    //   .limit(limit)
+    //   .sort({ publishDate: SortType.Down })
+    //   .populate('authorId')
+    //   .exec();
+    // 65d071e755b6d264737de0c2
+
     return this.offerModel
-      .find()
-      .limit(limit)
-      .sort({ publishDate: SortType.Down })
-      .populate('authorId')
+      .aggregate([
+        {
+          $lookup: {
+            from: 'comments',
+            let: { offerId: '$_id' },
+            pipeline: [
+              { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
+              { $project: { _id: 1 } },
+              // { $group: { _id: null, ave}}
+            ],
+            as: 'comments',
+          },
+        },
+        {
+          $addFields: {
+            id: { $toString: '$_id' },
+            commentsAmount: { $size: '$comments' },
+            rating: { $arrayElemAt: ['$comments.rating', 0] },
+          },
+        },
+        {
+          $unset: 'comments',
+        },
+        {
+          $limit: limit,
+        },
+      ])
+      .sort({ createdAt: SortType.Down })
       .exec();
   }
 
@@ -61,7 +93,6 @@ export class DefaultOfferService implements OfferService {
     return (await this.offerModel.exists({ _id: documentId })) !== null;
   }
 
-  //TODO findPremiumOffers
   public async findPremiumOffers(
     cityId: number,
     limit = DEFAULT_PREMIUM_OFFER_COUNT

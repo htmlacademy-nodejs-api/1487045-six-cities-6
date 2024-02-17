@@ -21,7 +21,7 @@ export class CommentEntity extends defaultClasses.TimeStamps {
   })
   public text: string;
 
-  @prop({ required: true })
+  @prop({ required: true, min: 1, max: 5 })
   public rating: number;
 
   @prop({ required: true, ref: UserEntity })
