@@ -25,14 +25,6 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
-    // return this.offerModel
-    //   .find()
-    //   .limit(limit)
-    //   .sort({ publishDate: SortType.Down })
-    //   .populate('authorId')
-    //   .exec();
-    // 65d071e755b6d264737de0c2
-
     return this.offerModel
       .aggregate([
         {
@@ -42,7 +34,6 @@ export class DefaultOfferService implements OfferService {
             pipeline: [
               { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
               { $project: { _id: 1 } },
-              // { $group: { _id: null, ave}}
             ],
             as: 'comments',
           },
@@ -51,7 +42,6 @@ export class DefaultOfferService implements OfferService {
           $addFields: {
             id: { $toString: '$_id' },
             commentsAmount: { $size: '$comments' },
-            rating: { $arrayElemAt: ['$comments.rating', 0] },
           },
         },
         {
