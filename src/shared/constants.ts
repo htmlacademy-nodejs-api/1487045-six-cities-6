@@ -27,3 +27,8 @@ export enum DescriptionLength {
   Min = 20,
   Max = 1024,
 }
+
+export enum CommentLength {
+  Min = 5,
+  Max = 1024,
+}
