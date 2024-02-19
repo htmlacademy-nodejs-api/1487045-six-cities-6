@@ -1,6 +1,6 @@
-import { Amenity, City, Location, Offer, OfferType, User } from '../types/index.js';
+import { Amenity, City, Location, OfferCreate, OfferType, User } from '../types/index.js';
 
-export function createOffer(offerData: string): Offer {
+export function createOffer(offerData: string): OfferCreate {
   const [
     title,
     description,
@@ -9,20 +9,17 @@ export function createOffer(offerData: string): Offer {
     previewImage,
     images,
     isPremium,
-    isFavorite,
-    rating,
     type,
     bedrooms,
     guests,
     price,
     amenities,
     author,
-    commentsAmount,
     location,
   ] = offerData.replace('\n', '').split('\t');
 
   const [latitude, longitude] = location.split(';');
-  const [name, email, avatar, password, userType ] = author.split(';');
+  const [name, email, avatar, password, userType] = author.split(';');
 
   return {
     title,
@@ -32,8 +29,6 @@ export function createOffer(offerData: string): Offer {
     previewImage,
     images: images.split(';'),
     isPremium: isPremium.toLowerCase() === 'true',
-    isFavorite: isFavorite.toLowerCase() === 'true',
-    rating: Number.parseFloat(rating),
     type: type as OfferType,
     bedrooms: Number(bedrooms),
     guests: Number(guests),
@@ -44,12 +39,11 @@ export function createOffer(offerData: string): Offer {
       email,
       avatar,
       password,
-      type: userType
+      type: userType,
     } as User,
-    commentsAmount: Number(commentsAmount),
     location: {
       latitude: Number.parseFloat(latitude),
-      longitude: Number.parseFloat(longitude)
-    } as Location
+      longitude: Number.parseFloat(longitude),
+    } as Location,
   };
 }

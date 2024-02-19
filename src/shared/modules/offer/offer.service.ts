@@ -22,6 +22,13 @@ export class DefaultOfferService implements OfferService {
 
   public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
     return this.offerModel.findById(offerId).exec();
+    // return this.offerModel.aggregate([
+    //   {
+    //     $lookup: {
+    //       from:
+    //     }
+    //   }
+    // ])
   }
 
   public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
@@ -41,7 +48,7 @@ export class DefaultOfferService implements OfferService {
         {
           $addFields: {
             id: { $toString: '$_id' },
-            commentsAmount: { $size: '$comments' },
+            commentsCOUNT: { $size: '$comments' },
           },
         },
         {
@@ -79,8 +86,8 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async exists(documentId: string): Promise<boolean> {
-    return (await this.offerModel.exists({ _id: documentId })) !== null;
+  public async exists(offerId: string): Promise<boolean> {
+    return (await this.offerModel.exists({ _id: offerId })) !== null;
   }
 
   public async findPremiumOffers(
