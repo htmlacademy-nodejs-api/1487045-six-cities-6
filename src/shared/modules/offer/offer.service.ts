@@ -20,40 +20,62 @@ export class DefaultOfferService implements OfferService {
     return result;
   }
 
+  private commentsLookup = [
+    {
+      $lookup: {
+        from: 'comments',
+        let: { offerId: '$_id' },
+        pipeline: [
+          { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
+          {
+            $group: {
+              _id: null,
+              averageRating: { $avg: '$rating' },
+              commentsAmount: { $sum: 1 },
+            },
+          },
+        ],
+        as: 'comments',
+      },
+    },
+    {
+      $addFields: {
+        id: { $toString: '$_id' },
+        commentsAmount: { $arrayElemAt: ['$comments.commentsAmount', 0] },
+        rating: { $arrayElemAt: ['$comments.averageRating', 0] },
+      },
+    },
+    {
+      $unset: 'comments',
+    },
+  ];
+
   public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel.findById(offerId).exec();
-    // return this.offerModel.aggregate([
-    //   {
-    //     $lookup: {
-    //       from:
-    //     }
-    //   }
-    // ])
+    const result = await this.offerModel.aggregate([
+      {
+        $match: { $expr: { $eq: ['$_id', { $toObjectId: offerId }] } },
+      },
+      ...this.commentsLookup,
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'authorId',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+    ]);
+
+    if (result.length === 0) {
+      return null;
+    }
+    return result[0];
   }
 
   public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
-        {
-          $lookup: {
-            from: 'comments',
-            let: { offerId: '$_id' },
-            pipeline: [
-              { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
-              { $project: { _id: 1 } },
-            ],
-            as: 'comments',
-          },
-        },
-        {
-          $addFields: {
-            id: { $toString: '$_id' },
-            commentsCOUNT: { $size: '$comments' },
-          },
-        },
-        {
-          $unset: 'comments',
-        },
+        ...this.commentsLookup,
         {
           $limit: limit,
         },
