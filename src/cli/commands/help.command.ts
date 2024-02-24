@@ -12,16 +12,10 @@ export class HelpCommand implements Command {
         Пример:
             main.cli.js --<${chalk.cyan('command')}> [${chalk.blue('--arguments')}]
         Команды:
-            ${chalk.cyan('--version')}:                   ${chalk.magentaBright('# выводит номер версии')}
-            ${chalk.cyan('--help')}:                      ${chalk.magentaBright('# печатает этот текст')}
-            ${chalk.cyan(
-              '--import'
-            )} <path> <user> <password> <host> <db_name> <salt>:             ${chalk.magentaBright(
-      '# импортирует данные из TSV'
-    )}
-            ${chalk.cyan('--generate')} <n> <path> <url>:  ${chalk.magentaBright(
-      '# генерирует произвольное количество тестовых данных'
-    )}
+            ${chalk.cyan('--version')}:                                                  ${chalk.magentaBright('# выводит номер версии')}
+            ${chalk.cyan('--help')}:                                                     ${chalk.magentaBright('# печатает этот текст')}
+            ${chalk.cyan('--import')} <path> <user> <password> <host> <db_name> <salt>:  ${chalk.magentaBright('# импортирует данные из TSV')}
+            ${chalk.cyan('--generate')} <n> <path> <url>:                                ${chalk.magentaBright('# генерирует произвольное количество тестовых данных')}
     `);
   }
 }
