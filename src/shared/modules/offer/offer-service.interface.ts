@@ -11,6 +11,7 @@ export interface OfferService {
   findPremiumOffers(cityId: number, limit?: number): Promise<DocumentType<OfferEntity>[]>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
+  findFavoriteOffers(limit?: number): Promise<DocumentType<OfferEntity>[]>;
 }
 
 // TODO:  Добавление/удаление оффера в/из избранное ?

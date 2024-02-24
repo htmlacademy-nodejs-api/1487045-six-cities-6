@@ -122,4 +122,10 @@ export class DefaultOfferService implements OfferService {
       .sort({ publishDate: SortType.Down })
       .exec();
   }
+
+  public async findFavoriteOffers(): Promise<DocumentType<OfferEntity>[]> {
+    //TODO: Доделать получение Favorites
+    //
+    return this.offerModel.find();
+  }
 }
