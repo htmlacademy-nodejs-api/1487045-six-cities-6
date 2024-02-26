@@ -23,3 +23,5 @@ export type Offer = {
   commentsAmount: number;
   location: Location;
 };
+
+export type OfferCreate = Omit<Offer, 'rating' | 'isFavorite' | 'commentsAmount'>;

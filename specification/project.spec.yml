@@ -276,7 +276,7 @@ paths:
       summary: Получение списка премиальных предложений для города.
 
       parameters:
-        - name: cityId
+        - name: city
           in: query
           description: Идентификатор города
           required: true

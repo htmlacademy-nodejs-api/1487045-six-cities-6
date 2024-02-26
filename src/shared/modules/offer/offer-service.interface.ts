@@ -8,9 +8,10 @@ export interface OfferService {
   findAll(limit?: number): Promise<DocumentType<OfferEntity>[]>;
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null>;
-  findPremiumOffers(cityId: number, limit?: number): Promise<DocumentType<OfferEntity>[]>;
+  findPremiumOffers(city: string, limit?: number): Promise<DocumentType<OfferEntity>[]>;
   incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
+  findFavoriteOffers(limit?: number): Promise<DocumentType<OfferEntity>[]>;
 }
 
 // TODO:  Добавление/удаление оффера в/из избранное ?

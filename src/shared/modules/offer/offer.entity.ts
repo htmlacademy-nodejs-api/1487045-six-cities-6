@@ -7,7 +7,6 @@ import {
   BedroomsAmount,
   GuestsAmount,
   PriceRange,
-  Rating,
   TitleLength,
 } from '../../constants.js';
 
@@ -51,12 +50,6 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ required: true })
   public isPremium: boolean;
 
-  @prop({ required: true })
-  public isFavorite: boolean;
-
-  @prop({ required: true, min: Rating.Min, max: Rating.Max })
-  public rating: number;
-
   @prop({ required: true, type: () => String, enum: OfferType })
   public type!: OfferType;
 
@@ -72,14 +65,11 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   @prop({ required: true, type: () => [String], default: [] })
   public amenities: Amenity[];
 
-  @prop({ required: true, default: 0 })
-  public commentsAmount: number;
+  @prop({ required: true, ref: UserEntity })
+  public authorId: Ref<UserEntity>;
 
   @prop({ required: true })
   public location: Location;
-
-  @prop({ required: true, ref: UserEntity })
-  public authorId: Ref<UserEntity>;
 }
 
 export const OfferModel = getModelForClass(OfferEntity);

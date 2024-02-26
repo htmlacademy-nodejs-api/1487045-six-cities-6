@@ -20,33 +20,62 @@ export class DefaultOfferService implements OfferService {
     return result;
   }
 
+  private commentsLookup = [
+    {
+      $lookup: {
+        from: 'comments',
+        let: { offerId: '$_id' },
+        pipeline: [
+          { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
+          {
+            $group: {
+              _id: null,
+              averageRating: { $avg: '$rating' },
+              commentsAmount: { $sum: 1 },
+            },
+          },
+        ],
+        as: 'comments',
+      },
+    },
+    {
+      $addFields: {
+        id: { $toString: '$_id' },
+        commentsAmount: { $arrayElemAt: ['$comments.commentsAmount', 0] },
+        rating: { $arrayElemAt: ['$comments.averageRating', 0] },
+      },
+    },
+    {
+      $unset: 'comments',
+    },
+  ];
+
   public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel.findById(offerId).exec();
+    const result = await this.offerModel.aggregate([
+      {
+        $match: { $expr: { $eq: ['$_id', { $toObjectId: offerId }] } },
+      },
+      ...this.commentsLookup,
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'authorId',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+    ]);
+
+    if (result.length === 0) {
+      return null;
+    }
+    return result[0];
   }
 
   public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
       .aggregate([
-        {
-          $lookup: {
-            from: 'comments',
-            let: { offerId: '$_id' },
-            pipeline: [
-              { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
-              { $project: { _id: 1 } },
-            ],
-            as: 'comments',
-          },
-        },
-        {
-          $addFields: {
-            id: { $toString: '$_id' },
-            commentsAmount: { $size: '$comments' },
-          },
-        },
-        {
-          $unset: 'comments',
-        },
+        ...this.commentsLookup,
         {
           $limit: limit,
         },
@@ -79,18 +108,24 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async exists(documentId: string): Promise<boolean> {
-    return (await this.offerModel.exists({ _id: documentId })) !== null;
+  public async exists(offerId: string): Promise<boolean> {
+    return (await this.offerModel.exists({ _id: offerId })) !== null;
   }
 
   public async findPremiumOffers(
-    cityId: number,
+    city: string,
     limit = DEFAULT_PREMIUM_OFFER_COUNT
   ): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find({ isPremium: true, cityId })
+      .find({ isPremium: true, city })
       .limit(limit)
       .sort({ publishDate: SortType.Down })
       .exec();
+  }
+
+  public async findFavoriteOffers(): Promise<DocumentType<OfferEntity>[]> {
+    //TODO: Доделать получение Favorites
+    //
+    return this.offerModel.find();
   }
 }

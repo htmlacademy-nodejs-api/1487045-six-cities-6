@@ -6,7 +6,7 @@ import { TSVFileReader } from '../../shared/libs/file-reader/tsv-file-reader.js'
 import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
 import { DefaultOfferService, OfferModel, OfferService } from '../../shared/modules/offer/index.js';
 import { DefaultUserService, UserModel, UserService } from '../../shared/modules/user/index.js';
-import { Offer } from '../../shared/types/index.js';
+import { OfferCreate } from '../../shared/types/index.js';
 import { DEFAULT_DB_PORT, DEFAULT_USER_PASSWORD } from './command.constant.js';
 import { Command } from './command.interface.js';
 
@@ -38,11 +38,14 @@ export class ImportCommand implements Command {
     this.databaseClient.disconnect();
   }
 
-  private async saveOffer(offer: Offer) {
-    const user = await this.userService.findOrCreate({
-      ...offer.author,
-      password: DEFAULT_USER_PASSWORD
-    }, this.salt);
+  private async saveOffer(offer: OfferCreate) {
+    const user = await this.userService.findOrCreate(
+      {
+        ...offer.author,
+        password: DEFAULT_USER_PASSWORD,
+      },
+      this.salt
+    );
 
     await this.offerService.create({
       ...offer,
@@ -54,7 +57,14 @@ export class ImportCommand implements Command {
     return '--import';
   }
 
-  public async execute(filename: string, login: string, password: string, host: string, dbname: string, salt: string): Promise<void> {
+  public async execute(
+    filename: string,
+    login: string,
+    password: string,
+    host: string,
+    dbname: string,
+    salt: string
+  ): Promise<void> {
     const uri = getMongoURI(login, password, host, DEFAULT_DB_PORT, dbname);
     this.salt = salt;
 
@@ -67,7 +77,7 @@ export class ImportCommand implements Command {
 
     try {
       await fileReader.read();
-    } catch(error) {
+    } catch (error) {
       console.error(chalk.red(`Can't import data from file ${filename}`));
       console.error(getErrorMessage(error));
     }
