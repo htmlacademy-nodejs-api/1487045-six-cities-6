@@ -113,11 +113,11 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async findPremiumOffers(
-    cityId: string,
+    city: string,
     limit = DEFAULT_PREMIUM_OFFER_COUNT
   ): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
-      .find({ isPremium: true, cityId })
+      .find({ isPremium: true, city })
       .limit(limit)
       .sort({ publishDate: SortType.Down })
       .exec();

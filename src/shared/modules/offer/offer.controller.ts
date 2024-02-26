@@ -84,7 +84,7 @@ export class OfferController extends BaseController {
   }
 
   public async getPremiumOffers({ query }: Request, res: Response): Promise<void> {
-    const offers = await this.offerService.findPremiumOffers(query.cityId as string);
+    const offers = await this.offerService.findPremiumOffers(query.city as string);
     const responseData = fillDTO(OfferPreviewRdo, offers);
     this.ok(res, responseData);
   }
