@@ -113,7 +113,7 @@ export class DefaultOfferService implements OfferService {
   }
 
   public async findPremiumOffers(
-    cityId: number,
+    cityId: string,
     limit = DEFAULT_PREMIUM_OFFER_COUNT
   ): Promise<DocumentType<OfferEntity>[]> {
     return this.offerModel
