@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import { Logger } from '../../libs/logger/index.js';
@@ -16,18 +16,39 @@ export class UserController extends BaseController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.UserService) private readonly userService: UserService,
-    @inject(Component.Config) private readonly configService: Config<RestSchema>,
+    @inject(Component.Config) private readonly configService: Config<RestSchema>
   ) {
     super(logger);
     this.logger.info('Register routes for UserController…');
 
-    this.addRoute({ path: '/register', method: HttpMethod.Post, handler: this.create });
-    this.addRoute({ path: '/login', method: HttpMethod.Post, handler: this.login});
-    this.addRoute({ path: '/login', method: HttpMethod.Get, handler: this.getAuthStatus});
-    this.addRoute({path: '/logout', method: HttpMethod.Post, handler: this.logout});
+    this.addRoute({
+      path: '/register',
+      method: HttpMethod.Post,
+      handler: this.create,
+    });
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Post,
+      handler: this.login,
+    });
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Get,
+      handler: this.getAuthStatus,
+    });
+    this.addRoute({
+      path: '/logout',
+      method: HttpMethod.Post,
+      handler: this.logout,
+    });
+    this.addRoute({
+      path: '/:userId',
+      method: HttpMethod.Get,
+      handler: this.show,
+    });
   }
 
-  public async create({body}: CreateUserRequest, res: Response): Promise<void> {
+  public async create({ body }: CreateUserRequest, res: Response): Promise<void> {
     const existsUser = await this.userService.findByEmail(body.email);
 
     if (existsUser) {
@@ -42,7 +63,16 @@ export class UserController extends BaseController {
     this.created(res, fillDTO(UserRdo, result));
   }
 
-  public async login({body}: LoginUserRequest, _res: Response): Promise<void> {
+  public async show({ params }: Request, res: Response): Promise<void> {
+    const user = await this.userService.findById(params.userId);
+
+    if (!user) {
+      throw new HttpError(StatusCodes.NOT_FOUND, 'User not found', 'UserController');
+    }
+    this.ok(res, fillDTO(UserRdo, user));
+  }
+
+  public async login({ body }: LoginUserRequest, _res: Response): Promise<void> {
     const existsUser = await this.userService.findByEmail(body.email);
 
     if (!existsUser) {
@@ -53,26 +83,14 @@ export class UserController extends BaseController {
       );
     }
 
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented.',
-      'UserController'
-    );
+    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented.', 'UserController');
   }
 
   public async getAuthStatus(): Promise<void> {
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented.',
-      'UserController'
-    );
+    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented.', 'UserController');
   }
 
   public async logout(): Promise<void> {
-    throw new HttpError(
-      StatusCodes.NOT_IMPLEMENTED,
-      'Not implemented.',
-      'UserController'
-    );
+    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented.', 'UserController');
   }
 }

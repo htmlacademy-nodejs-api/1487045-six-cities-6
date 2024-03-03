@@ -414,8 +414,8 @@ components:
       type: object
       properties:
         id:
-          type: number
-          example: 1
+          type: string
+          example: "1"
 
         name:
           type: string
@@ -727,6 +727,10 @@ components:
     comment:
       type: object
       properties:
+        id:
+          type: string
+          example: "3"
+
         text:
           type: string
           example: "Cozy mountain hotel with views of picturesque mountains!"

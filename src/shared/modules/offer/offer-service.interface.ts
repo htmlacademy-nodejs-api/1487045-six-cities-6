@@ -1,15 +1,18 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { CreateOfferDto, OfferEntity, UpdateOfferDto } from './index.js';
+import { CommentStatistics } from '../comment/types/comment-statistics.type.js';
 
 export interface OfferService {
   create(dto: CreateOfferDto): Promise<DocumentType<OfferEntity>>;
   findById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
-
   findAll(limit?: number): Promise<DocumentType<OfferEntity>[]>;
   deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null>;
   updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null>;
   findPremiumOffers(city: string, limit?: number): Promise<DocumentType<OfferEntity>[]>;
-  incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null>;
+  updateOfferStatistics(
+    offerId: string,
+    statistics: CommentStatistics
+  ): Promise<DocumentType<OfferEntity> | null>;
   exists(documentId: string): Promise<boolean>;
   findFavoriteOffers(limit?: number): Promise<DocumentType<OfferEntity>[]>;
 }

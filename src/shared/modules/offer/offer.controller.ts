@@ -5,8 +5,8 @@ import { Logger } from '../../libs/logger/index.js';
 import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
 import { OfferPreviewRdo, OfferRdo, OfferService } from './index.js';
-import { CreateOfferRequest } from './create-offer-request.type.js';
-import { UpdateOfferRequest } from './update-offer-request.type.js';
+import { CreateOfferRequest } from './types/create-offer-request.type.js';
+import { UpdateOfferRequest } from './types/update-offer-request.type.js';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()
@@ -50,7 +50,10 @@ export class OfferController extends BaseController {
         'OfferController'
       );
     }
+    console.log('OFFER: ', offer);
     const responseData = fillDTO(OfferRdo, offer);
+    console.log(responseData);
+
     this.ok(res, responseData);
   }
 
