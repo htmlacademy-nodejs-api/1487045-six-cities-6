@@ -10,7 +10,13 @@ import {
   ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
-import { CreateOfferDto, OfferPreviewRdo, OfferRdo, OfferService } from './index.js';
+import {
+  CreateOfferDto,
+  OfferPreviewRdo,
+  OfferRdo,
+  OfferService,
+  UpdateOfferDto,
+} from './index.js';
 import { CreateOfferRequest } from './types/create-offer-request.type.js';
 import { UpdateOfferRequest } from './types/update-offer-request.type.js';
 import { StatusCodes } from 'http-status-codes';
@@ -50,7 +56,10 @@ export class OfferController extends BaseController {
       path: '/:offerId',
       method: HttpMethod.Patch,
       handler: this.update,
-      middlewares: [new ValidateObjectIdMiddleware('offerId')],
+      middlewares: [
+        new ValidateObjectIdMiddleware('offerId'),
+        new ValidateDtoMiddleware(UpdateOfferDto),
+      ],
     });
 
     this.addRoute({
