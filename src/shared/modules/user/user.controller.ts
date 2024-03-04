@@ -2,7 +2,12 @@ import { Request, Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import { Logger } from '../../libs/logger/index.js';
-import { BaseController, HttpError, HttpMethod } from '../../libs/rest/index.js';
+import {
+  BaseController,
+  HttpError,
+  HttpMethod,
+  ValidateObjectIdMiddleware,
+} from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
 import { CreateUserRequest } from './create-user-request.type.js';
 import { UserService } from './user-service.interface.js';
@@ -45,6 +50,7 @@ export class UserController extends BaseController {
       path: '/:userId',
       method: HttpMethod.Get,
       handler: this.show,
+      middlewares: [new ValidateObjectIdMiddleware('userId')],
     });
   }
 
