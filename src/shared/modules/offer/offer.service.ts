@@ -34,8 +34,14 @@ export class DefaultOfferService implements OfferService {
     return await this.offerModel.find().limit(limit).sort({ createdAt: SortType.Down }).exec();
   }
 
-  public async updateById(offerId: string, dto: UpdateOfferDto): Promise<DocumentType<OfferEntity> | null> {
-    return await this.offerModel.findByIdAndUpdate(offerId, dto, { new: true }).populate('authorId').exec();
+  public async updateById(
+    offerId: string,
+    dto: UpdateOfferDto
+  ): Promise<DocumentType<OfferEntity> | null> {
+    return await this.offerModel
+      .findByIdAndUpdate(offerId, dto, { new: true })
+      .populate('authorId')
+      .exec();
   }
 
   public async deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
@@ -60,7 +66,7 @@ export class DefaultOfferService implements OfferService {
     return await this.offerModel
       .find({ isPremium: true, city })
       .limit(limit)
-      .sort({ publishDate: SortType.Down })
+      .sort({ createdAt: SortType.Down })
       .exec();
   }
 

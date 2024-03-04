@@ -32,9 +32,6 @@ export class CreateOfferDto {
   @MaxLength(DescriptionLength.Max, { message: CreateOfferValidationMessage.description.maxLength })
   public description: string;
 
-  // @IsDateString({}, { message: CreateOfferValidationMessage.postDate.invalidFormat })
-  // public publishDate: Date;
-
   @IsEnum(City, { message: CreateOfferValidationMessage.city.invalid })
   public city: City;
 

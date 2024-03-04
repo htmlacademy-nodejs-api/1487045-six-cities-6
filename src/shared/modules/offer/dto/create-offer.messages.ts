@@ -15,9 +15,6 @@ export const CreateOfferValidationMessage = {
     minLength: `Minimum description length must be ${DescriptionLength.Min}`,
     maxLength: `Maximum description length must be ${DescriptionLength.Max}`,
   },
-  // publishDate: {
-  //   invalidFormat: 'postDate must be a valid ISO date',
-  // },
   city: {
     invalid: 'Invalid city',
   },

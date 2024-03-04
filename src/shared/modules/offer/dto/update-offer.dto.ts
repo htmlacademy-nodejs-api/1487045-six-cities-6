@@ -35,9 +35,6 @@ export class UpdateOfferDto {
   @MaxLength(DescriptionLength.Max, { message: UpdateOfferValidationMessage.description.maxLength })
   public description?: string;
 
-  // @IsOptional()
-  // public publishDate?: Date;
-
   @IsOptional()
   @IsEnum(City, { message: UpdateOfferValidationMessage.city.invalid })
   public city?: City;
