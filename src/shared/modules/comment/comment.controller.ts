@@ -1,4 +1,4 @@
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { inject, injectable } from 'inversify';
 import { fillDTO } from '../../helpers/common.js';
 import { Logger } from '../../libs/logger/index.js';
@@ -22,16 +22,11 @@ export class CommentController extends BaseController {
     this.logger.info('Register routes for CommentController...');
 
     this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
-    this.addRoute({ path: '/:offerId', method: HttpMethod.Get, handler: this.index });
   }
 
   public async create({ body }: CreateCommentRequest, res: Response): Promise<void> {
     if (!(await this.offerService.exists(body.offerId))) {
-      throw new HttpError(
-        StatusCodes.NOT_FOUND,
-        `Offer with id ${body.offerId} not found.`,
-        'CommentController'
-      );
+      throw new HttpError(StatusCodes.NOT_FOUND, `Offer with id ${body.offerId} not found.`, 'CommentController');
     }
 
     const result = await this.commentService.create(body);
@@ -40,11 +35,5 @@ export class CommentController extends BaseController {
     const comment = await this.commentService.findById(result.id);
     const responseData = fillDTO(CommentRdo, comment);
     this.created(res, responseData);
-  }
-
-  public async index({ params }: Request, res: Response): Promise<void> {
-    const comment = await this.commentService.findByOfferId(params.offerId);
-    const responseData = fillDTO(CommentRdo, comment);
-    this.ok(res, responseData);
   }
 }

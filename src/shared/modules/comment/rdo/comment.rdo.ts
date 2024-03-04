@@ -9,8 +9,8 @@ export class CommentRdo {
   @Expose()
   public text: string;
 
-  @Expose()
-  public createdAt: string;
+  @Expose({ name: 'createdAt' })
+  public publishDate: string;
 
   @Expose()
   public rating: number;

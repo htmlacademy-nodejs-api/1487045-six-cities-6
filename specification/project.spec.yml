@@ -340,6 +340,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/comment"
 
+  /comments:
     post:
       tags:
         - comments
