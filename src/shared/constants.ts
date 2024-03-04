@@ -32,3 +32,5 @@ export enum CommentLength {
   Min = 5,
   Max = 1024,
 }
+
+export const IMAGE_URL_MAX_LENGTH = 256;

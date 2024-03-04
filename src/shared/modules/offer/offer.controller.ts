@@ -6,10 +6,11 @@ import {
   BaseController,
   HttpError,
   HttpMethod,
+  ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
 } from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
-import { OfferPreviewRdo, OfferRdo, OfferService } from './index.js';
+import { CreateOfferDto, OfferPreviewRdo, OfferRdo, OfferService } from './index.js';
 import { CreateOfferRequest } from './types/create-offer-request.type.js';
 import { UpdateOfferRequest } from './types/update-offer-request.type.js';
 import { StatusCodes } from 'http-status-codes';
@@ -28,26 +29,37 @@ export class OfferController extends BaseController {
     this.logger.info('Register routes for OfferController...');
 
     this.addRoute({ path: '/', method: HttpMethod.Get, handler: this.index });
-    this.addRoute({ path: '/', method: HttpMethod.Post, handler: this.create });
+
+    this.addRoute({
+      path: '/',
+      method: HttpMethod.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateOfferDto)],
+    });
+
     this.addRoute({ path: '/premium', method: HttpMethod.Get, handler: this.getPremiumOffers });
+
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Get,
       handler: this.show,
       middlewares: [new ValidateObjectIdMiddleware('offerId')],
     });
+
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Patch,
       handler: this.update,
       middlewares: [new ValidateObjectIdMiddleware('offerId')],
     });
+
     this.addRoute({
       path: '/:offerId',
       method: HttpMethod.Delete,
       handler: this.delete,
       middlewares: [new ValidateObjectIdMiddleware('offerId')],
     });
+
     this.addRoute({
       path: '/:offerId/comments',
       method: HttpMethod.Get,
