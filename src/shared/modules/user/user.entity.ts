@@ -8,11 +8,11 @@ export interface UserEntity extends defaultClasses.Base {}
 @modelOptions({
   schemaOptions: {
     collection: 'users',
-    timestamps: true
-  }
+    timestamps: true,
+  },
 })
 export class UserEntity extends defaultClasses.TimeStamps implements User {
-  @prop({ required: true})
+  @prop({ required: true })
   public name: string;
 
   @prop({ required: true, unique: true })
@@ -42,6 +42,11 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
 
   public getPassword() {
     return this.password;
+  }
+
+  public verifyPassword(password: string, salt: string) {
+    const hashPassword = createSHA256(password, salt);
+    return hashPassword === this.password;
   }
 }
 

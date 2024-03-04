@@ -5,7 +5,7 @@ import { Logger } from '../shared/libs/logger/index.js';
 import { Component } from '../shared/types/component.enum.js';
 import { DatabaseClient } from '../shared/libs/database-client/database-client.interface.js';
 import { getMongoURI } from '../shared/helpers/database.js';
-import { AppExceptionFilter, Controller } from '../shared/libs/rest/index.js';
+import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 
 @injectable()
 export class RestApplication {
@@ -16,9 +16,10 @@ export class RestApplication {
     @inject(Component.Config) private readonly config: Config<RestSchema>,
     @inject(Component.DatabaseClient) private readonly databaseClient: DatabaseClient,
     @inject(Component.OfferController) private readonly offerController: Controller,
-    @inject(Component.ExceptionFilter) private readonly appExceptionFilter: AppExceptionFilter,
+    @inject(Component.ExceptionFilter) private readonly appExceptionFilter: ExceptionFilter,
     @inject(Component.UserController) private readonly userController: Controller,
-    @inject(Component.CommentController) private readonly commentController: Controller
+    @inject(Component.CommentController) private readonly commentController: Controller,
+    @inject(Component.AuthExceptionFilter) private readonly authExceptionFilter: ExceptionFilter
   ) {
     this.server = express();
   }
@@ -52,6 +53,7 @@ export class RestApplication {
   }
 
   private async _initExceptionFilters() {
+    this.server.use(this.authExceptionFilter.catch.bind(this.authExceptionFilter));
     this.server.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
   }
 
