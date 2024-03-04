@@ -15,6 +15,7 @@ export const CreateUserValidationMessage = {
     invalid: 'type must be a "Pro" or "Normal"',
   },
   password: {
+    invalidFormat: 'Password should be a string',
     minLength: `Minimum password length must be ${PasswordLength.Min}`,
     maxLength: `Maximum password length must be ${PasswordLength.Max}`,
   },

@@ -17,6 +17,7 @@ export class CreateUserDto {
   @IsEnum(UserType, { message: CreateUserValidationMessage.type.invalid })
   public type: UserType;
 
+  @IsString({ message: CreateUserValidationMessage.password.invalidFormat })
   @MinLength(PasswordLength.Min, { message: CreateUserValidationMessage.password.minLength })
   @MaxLength(PasswordLength.Max, { message: CreateUserValidationMessage.password.maxLength })
   public password: string;
