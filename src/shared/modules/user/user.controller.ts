@@ -6,6 +6,7 @@ import {
   BaseController,
   HttpError,
   HttpMethod,
+  PrivateRouteMiddleware,
   UploadFileMiddleware,
   ValidateDtoMiddleware,
   ValidateObjectIdMiddleware,
@@ -57,6 +58,7 @@ export class UserController extends BaseController {
       path: '/logout',
       method: HttpMethod.Post,
       handler: this.logout,
+      middlewares: [new PrivateRouteMiddleware()],
     });
 
     this.addRoute({
