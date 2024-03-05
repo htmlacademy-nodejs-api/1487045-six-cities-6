@@ -26,6 +26,12 @@ Content-Type: application/json
 
 ###
 
+## Проверить токен пользователя
+GET http://localhost:4000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRvcmFuc0BvdmVybG9vay5uZXQiLCJpZCI6IjY0NzBiYzM4M2UzMGRiNjc5ZGZhYzJkMiIsImlhdCI6MTY4NTk3NTQ4MiwiZXhwIjoxNjg2MTQ4MjgyfQ.Gq2-B1egouAnMxmXlR2ElVT6wCa97PS6lxzVI8LnGvo
+
+###
+
 ## Отправить изображение(аватар)
 
 POST http://localhost:4000/users/65e4fe5b25a7b51387df7154/avatar HTTP/1.1

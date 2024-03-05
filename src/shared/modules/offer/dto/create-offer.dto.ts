@@ -3,7 +3,6 @@ import {
   IsBoolean,
   IsEnum,
   IsInt,
-  IsMongoId,
   IsString,
   Max,
   MaxLength,
@@ -70,7 +69,6 @@ export class CreateOfferDto {
   @IsString({ each: true, message: CreateOfferValidationMessage.amenities.invalidFormat })
   public amenities: Amenity[];
 
-  @IsMongoId({ message: CreateOfferValidationMessage.authorId.invalidId })
   public authorId: string;
 
   @ValidateNested()

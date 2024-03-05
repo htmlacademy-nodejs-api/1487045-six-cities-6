@@ -13,7 +13,6 @@ export class CreateCommentDto {
   @Max(Rating.Max, { message: CreateCommentMessages.rating.maxValue })
   public rating: number;
 
-  @IsMongoId({ message: CreateCommentMessages.authorId.invalidFormat })
   public authorId: string;
 
   @IsMongoId({ message: CreateCommentMessages.offerId.invalidFormat })

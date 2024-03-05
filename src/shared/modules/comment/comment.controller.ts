@@ -6,6 +6,7 @@ import {
   BaseController,
   HttpError,
   HttpMethod,
+  PrivateRouteMiddleware,
   ValidateDtoMiddleware,
 } from '../../libs/rest/index.js';
 import { Component } from '../../types/component.enum.js';
@@ -31,11 +32,11 @@ export class CommentController extends BaseController {
       path: '/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateCommentDto)],
+      middlewares: [new PrivateRouteMiddleware(), new ValidateDtoMiddleware(CreateCommentDto)],
     });
   }
 
-  public async create({ body }: CreateCommentRequest, res: Response): Promise<void> {
+  public async create({ body, tokenPayload }: CreateCommentRequest, res: Response): Promise<void> {
     if (!(await this.offerService.exists(body.offerId))) {
       throw new HttpError(
         StatusCodes.NOT_FOUND,
@@ -44,7 +45,7 @@ export class CommentController extends BaseController {
       );
     }
 
-    const result = await this.commentService.create(body);
+    const result = await this.commentService.create({ ...body, authorId: tokenPayload.id });
     const statistics = await this.commentService.getOfferStatistics(body.offerId);
     await this.offerService.updateOfferStatistics(body.offerId, statistics);
     const comment = await this.commentService.findById(result.id);

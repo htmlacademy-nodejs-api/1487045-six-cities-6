@@ -17,7 +17,7 @@ tags:
     description: Действия с пользователем.
 
 paths:
-  /user/register:
+  /users/register:
     post:
       tags:
         - users
@@ -46,7 +46,7 @@ paths:
         "400":
           description: Ошибка валидации данных
 
-  /user/login:
+  /users/login:
     post:
       tags:
         - users
@@ -100,7 +100,7 @@ paths:
         "401":
           description: Пользователь не авторизован. Токен не валидный.
 
-  /user/logout:
+  /users/logout:
     post:
       tags:
         - users
@@ -722,8 +722,8 @@ components:
           maximum: 5
           example: 3.5
 
-        author:
-          $ref: "#/components/schemas/user"
+        authorId:
+          type: string
 
     comment:
       type: object
