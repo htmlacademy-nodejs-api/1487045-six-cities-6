@@ -4,6 +4,7 @@ import { Component, SortType } from '../../types/index.js';
 import { CreateOfferDto, OfferEntity, OfferService, UpdateOfferDto } from './index.js';
 import { inject, injectable } from 'inversify';
 import { DEFAULT_OFFER_COUNT, DEFAULT_PREMIUM_OFFER_COUNT } from './offer.constant.js';
+import { CommentStatistics } from '../comment/types/comment-statistics.type.js';
 
 @injectable()
 export class DefaultOfferService implements OfferService {
@@ -20,92 +21,38 @@ export class DefaultOfferService implements OfferService {
     return result;
   }
 
-  private commentsLookup = [
-    {
-      $lookup: {
-        from: 'comments',
-        let: { offerId: '$_id' },
-        pipeline: [
-          { $match: { $expr: { $eq: ['$$offerId', '$offerId'] } } },
-          {
-            $group: {
-              _id: null,
-              averageRating: { $avg: '$rating' },
-              commentsAmount: { $sum: 1 },
-            },
-          },
-        ],
-        as: 'comments',
-      },
-    },
-    {
-      $addFields: {
-        id: { $toString: '$_id' },
-        commentsAmount: { $arrayElemAt: ['$comments.commentsAmount', 0] },
-        rating: { $arrayElemAt: ['$comments.averageRating', 0] },
-      },
-    },
-    {
-      $unset: 'comments',
-    },
-  ];
-
   public async findById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    const result = await this.offerModel.aggregate([
-      {
-        $match: { $expr: { $eq: ['$_id', { $toObjectId: offerId }] } },
-      },
-      ...this.commentsLookup,
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'authorId',
-          foreignField: '_id',
-          as: 'author',
-        },
-      },
-    ]);
+    const result = await this.offerModel.findById(offerId).populate('authorId').exec();
 
-    if (result.length === 0) {
+    if (!result) {
       return null;
     }
-    return result[0];
+    return result;
   }
 
   public async findAll(limit = DEFAULT_OFFER_COUNT): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel
-      .aggregate([
-        ...this.commentsLookup,
-        {
-          $limit: limit,
-        },
-      ])
-      .sort({ createdAt: SortType.Down })
-      .exec();
+    return await this.offerModel.find().limit(limit).sort({ createdAt: SortType.Down }).exec();
   }
 
   public async updateById(
     offerId: string,
     dto: UpdateOfferDto
   ): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
+    return await this.offerModel
       .findByIdAndUpdate(offerId, dto, { new: true })
       .populate('authorId')
       .exec();
   }
 
   public async deleteById(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel.findByIdAndDelete(offerId).exec();
+    return await this.offerModel.findByIdAndDelete(offerId).exec();
   }
 
-  public async incCommentCount(offerId: string): Promise<DocumentType<OfferEntity> | null> {
-    return this.offerModel
-      .findByIdAndUpdate(offerId, {
-        $inc: {
-          commentsAmount: 1,
-        },
-      })
-      .exec();
+  public async updateOfferStatistics(
+    offerId: string,
+    statistics: CommentStatistics
+  ): Promise<DocumentType<OfferEntity> | null> {
+    return await this.offerModel.findByIdAndUpdate(offerId, statistics).exec();
   }
 
   public async exists(offerId: string): Promise<boolean> {
@@ -116,16 +63,25 @@ export class DefaultOfferService implements OfferService {
     city: string,
     limit = DEFAULT_PREMIUM_OFFER_COUNT
   ): Promise<DocumentType<OfferEntity>[]> {
-    return this.offerModel
+    return await this.offerModel
       .find({ isPremium: true, city })
       .limit(limit)
-      .sort({ publishDate: SortType.Down })
+      .sort({ createdAt: SortType.Down })
       .exec();
   }
 
-  public async findFavoriteOffers(): Promise<DocumentType<OfferEntity>[]> {
-    //TODO: Доделать получение Favorites
-    //
-    return this.offerModel.find();
+  public async checkUserPermisson(authorId: string, offerId: string): Promise<boolean> {
+    const offer = await this.findById(offerId);
+    const result = offer?.authorId.id === authorId;
+    return result;
+  }
+
+  public async findOffersByIds(offersIds: string[]): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ _id: { $in: offersIds } })
+      .populate(['authorId'])
+      .limit(DEFAULT_OFFER_COUNT)
+      .sort({ createdAt: SortType.Down })
+      .exec();
   }
 }

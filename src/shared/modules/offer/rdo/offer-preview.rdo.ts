@@ -8,7 +8,7 @@ export class OfferPreviewRdo {
   @Expose()
   public title: string;
 
-  @Expose()
+  @Expose({ name: 'createdAt' })
   public publishDate: string;
 
   @Expose()

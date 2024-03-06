@@ -32,3 +32,15 @@ export enum CommentLength {
   Min = 5,
   Max = 1024,
 }
+
+export const IMAGE_URL_MAX_LENGTH = 256;
+
+export enum UsernameLength {
+  Min = 1,
+  Max = 15,
+}
+
+export enum PasswordLength {
+  Min = 6,
+  Max = 12,
+}

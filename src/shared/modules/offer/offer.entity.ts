@@ -8,6 +8,7 @@ import {
   GuestsAmount,
   PriceRange,
   TitleLength,
+  Rating,
 } from '../../constants.js';
 
 export interface OfferEntity extends defaultClasses.Base {}
@@ -35,9 +36,6 @@ export class OfferEntity extends defaultClasses.TimeStamps {
   })
   public description: string;
 
-  @prop({ required: true })
-  public publishDate: Date;
-
   @prop({ required: true, type: () => String, enum: City })
   public city!: City;
 
@@ -49,6 +47,12 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({ required: true })
   public isPremium: boolean;
+
+  @prop({ required: false })
+  public isFavorite!: boolean;
+
+  @prop({ min: Rating.Min, max: Rating.Max, default: null })
+  public rating: number;
 
   @prop({ required: true, type: () => String, enum: OfferType })
   public type!: OfferType;
@@ -64,6 +68,9 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({ required: true, type: () => [String], default: [] })
   public amenities: Amenity[];
+
+  @prop({ default: 0 })
+  public commentsAmount: number;
 
   @prop({ required: true, ref: UserEntity })
   public authorId: Ref<UserEntity>;

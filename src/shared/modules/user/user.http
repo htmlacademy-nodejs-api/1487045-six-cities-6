@@ -20,8 +20,30 @@ POST http://localhost:4000/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "jessica@gmail.com",
-  "password": "4a83854cf6f0112b4295bddd535a9b3fbe54a3f90e853b59d42e4bed553c55a4"
+  "email": "kotser@gmail.com",
+  "password": "qwerty123"
 }
 
 ###
+
+## Проверить токен пользователя
+GET http://localhost:4000/users/login HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTc3YzFhOWE4NDFmNmIzODZmMDI0YSIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk2NzE5NjQsImV4cCI6MTcwOTg0NDc2NH0.-qB4MusWyUwbQ9vCskEAv_IJZ64Y0LeAnTG8aG2grfI
+
+###
+
+
+## Отправить изображение(аватар)
+
+POST http://localhost:4000/users/65e4fe5b25a7b51387df7154/avatar HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTc3YzFhOWE4NDFmNmIzODZmMDI0YSIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk2NzE5NjQsImV4cCI6MTcwOTg0NDc2NH0.-qB4MusWyUwbQ9vCskEAv_IJZ64Y0LeAnTG8aG2grfI
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="screen.jpg"
+Content-Type: image/jpeg
+
+< /home/kotser/projects/1487045-six-cities-6/markup/img/avatar-angelina.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+##
