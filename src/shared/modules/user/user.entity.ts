@@ -2,6 +2,7 @@
 import { defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 import { User, UserType } from '../../types/index.js';
 import { createSHA256 } from '../../helpers/index.js';
+import { DEFAULT_AVATAR_FILE_NAME } from './user.constant.js';
 
 export interface UserEntity extends defaultClasses.Base {}
 
@@ -18,7 +19,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   @prop({ required: true, unique: true })
   public email: string;
 
-  @prop({ required: false, default: 'default-avatar.jpg' })
+  @prop({ required: false, default: DEFAULT_AVATAR_FILE_NAME })
   public avatar?: string;
 
   @prop({ required: true, enum: UserType })
@@ -26,6 +27,9 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
 
   @prop({ required: true })
   private password?: string;
+
+  @prop({ required: false, default: [], _id: false })
+  public favorites: string[];
 
   constructor(userData: User) {
     super();
