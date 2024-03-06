@@ -1,12 +1,12 @@
-import { inject, injectable } from 'inversify';
 import express, { Express } from 'express';
+import { inject, injectable } from 'inversify';
+import { getFullServerPath, getMongoURI } from '../shared/helpers/index.js';
 import { Config, RestSchema } from '../shared/libs/config/index.js';
-import { Logger } from '../shared/libs/logger/index.js';
-import { Component } from '../shared/types/component.enum.js';
 import { DatabaseClient } from '../shared/libs/database-client/database-client.interface.js';
-import { getMongoURI } from '../shared/helpers/database.js';
+import { Logger } from '../shared/libs/logger/index.js';
 import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 import { ParseTokenMiddleware } from '../shared/libs/rest/middleware/parse-token.middleware.js';
+import { Component } from '../shared/types/component.enum.js';
 
 @injectable()
 export class RestApplication {
@@ -87,6 +87,8 @@ export class RestApplication {
 
     this.logger.info('Try to init server...');
     await this._initServer();
-    this.logger.info(`🚀 Server started on http://localhost:${this.config.get('PORT')}`);
+    this.logger.info(
+      `🚀 Server started on ${getFullServerPath(this.config.get('HOST'), this.config.get('PORT'))}`
+    );
   }
 }
