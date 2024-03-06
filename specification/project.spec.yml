@@ -405,13 +405,13 @@ paths:
       summary: Добавление комментария для предложения.
 
       parameters:
-        - name: offerId
-          in: path
-          description: Идентификатор предложения
+        - name: Authorization
+          in: header
           required: true
           schema:
             type: string
-            example: 11
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWlrZSBMZWUiLCJlbWFpbCI6Im1pa2VAZ21haWwuY29tIn0.6fUkw6w8yh9MtPfBoRV_R1GQgsLTUnYZBeYhW_xHteY
+
 
       requestBody:
         description: Информация для создания комментария
@@ -575,10 +575,6 @@ components:
           items:
             type: string
           example: ["Breakfast", "Air conditioning"]
-
-        authorId:
-          type: string
-          example: "65e255ab1907bfbbd4d33e62"
 
         location:
           type: object
@@ -776,7 +772,7 @@ components:
           maximum: 5
           example: 3.5
 
-        authorId:
+        offerId:
           type: string
 
     comment:
