@@ -8,21 +8,21 @@ Content-Type: application/json
 ## Создать новое предложение
 POST http://localhost:4000/offers HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTg4ODU4NzcyZGRiZjU1ZGM2MjlmZiIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk3Mzk3MDQsImV4cCI6MTcwOTkxMjUwNH0.2I0Mu1fhvi5tjK9Ffstiw3Z2YFonlZd6uCSXfnFPEBU
 
 {
-  "title": "Супер отель 2",
-  "description": "Описание отеля 2 sdfksdf sadfsdf asdfsdf",
+  "title": "Forest Hills Hotel 222",
+  "description": "2 2323 Eco-lodge deep in the rainforest. Bungalows on stilts, outdoor showers, hammocks. Hiking, biking, birdwatching, relaxing in nature.",
   "publishDate": "2024-02-26T21:20:59.734Z",
-  "city": "Cologne",
+  "city": "Paris",
   "previewImage": "http://preview.com/image1.jpg",
   "images": ["http://images.com/1.jpg", "http://images.com/2.jpg"],
-  "isPremium": false,
-  "type": "House",
+  "isPremium": true,
+  "type": "Apartment",
   "bedrooms": 3,
-  "guests": 6,
-  "price": 777,
-  "amenities": [],
-  "authorId": "65e2557b1907bfbbd4d33e60",
+  "guests":4 ,
+  "price": 480,
+  "amenities": ["Washer"],
   "location": {
     "latitude": 48.85661,
     "longitude": 2.351499
@@ -32,13 +32,51 @@ Content-Type: application/json
 ###
 
 ## Получить детальное предложение
-GET http://localhost:4000/offers/65e255ab1907bfbbd4d33e62 HTTP/1.1
+GET http://localhost:4000/offers/65e889aa772ddbf55dc62a12 HTTP/1.1
 Content-Type: application/json
 
 ###
 
 ## Получить список премиум-предложений
-GET http://localhost:4000/offers/premium?city=Cologne HTTP/1.1
+GET http://localhost:4000/offers/premium?city=Paris HTTP/1.1
 Content-Type: application/json
 
 ###
+
+## Обновить предложение
+PATCH http://localhost:4000/offers/65e88963772ddbf55dc62a0e HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTg4ODU4NzcyZGRiZjU1ZGM2MjlmZiIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk3Mzk3MDQsImV4cCI6MTcwOTkxMjUwNH0.2I0Mu1fhvi5tjK9Ffstiw3Z2YFonlZd6uCSXfnFPEBU
+
+{
+    "title": "Hilltop Haven обновлено",
+    "price": 1999
+}
+
+###
+
+## Удаление предложения
+DELETE http://localhost:4000/offers/65e88963772ddbf55dc62a0e HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTg4ODU4NzcyZGRiZjU1ZGM2MjlmZiIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk3Mzk3MDQsImV4cCI6MTcwOTkxMjUwNH0.2I0Mu1fhvi5tjK9Ffstiw3Z2YFonlZd6uCSXfnFPEBU
+
+###
+
+## Список избранных предложений
+GET http://localhost:4000/offers/favorites HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTg4ODU4NzcyZGRiZjU1ZGM2MjlmZiIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk3Mzk3MDQsImV4cCI6MTcwOTkxMjUwNH0.2I0Mu1fhvi5tjK9Ffstiw3Z2YFonlZd6uCSXfnFPEBU
+
+###
+
+## Добавление предложения в избранное
+PATCH http://localhost:4000/offers/65e88963772ddbf55dc62a0e/favorite HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTg4ODU4NzcyZGRiZjU1ZGM2MjlmZiIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk3Mzk3MDQsImV4cCI6MTcwOTkxMjUwNH0.2I0Mu1fhvi5tjK9Ffstiw3Z2YFonlZd6uCSXfnFPEBU
+
+###
+
+## Удаление предложения из избранного
+DELETE http://localhost:4000/offers/65e88963772ddbf55dc62a0e/favorite HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1ZTg4ODU4NzcyZGRiZjU1ZGM2MjlmZiIsIm5hbWUiOiJTZXJnZXkiLCJlbWFpbCI6ImtvdHNlckBnbWFpbC5jb20iLCJpYXQiOjE3MDk3Mzk3MDQsImV4cCI6MTcwOTkxMjUwNH0.2I0Mu1fhvi5tjK9Ffstiw3Z2YFonlZd6uCSXfnFPEBU

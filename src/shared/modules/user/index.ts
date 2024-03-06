@@ -7,3 +7,5 @@ export * from './user.container.js';
 export * from './user.controller.js';
 export * from './dto/create-user.messages.js';
 export * from './dto/login-user.messages.js';
+export * from './user.constant.js';
+export * from './dto/update-user.dto.js';

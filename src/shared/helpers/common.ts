@@ -1,6 +1,8 @@
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { ValidationError } from 'class-validator';
 import { ApplicationError, ValidationErrorField } from '../libs/rest/index.js';
+import { OfferEntity } from '../modules/offer/index.js';
+import { UserEntity } from '../modules/user/index.js';
 
 export function generateRandomNumber(min: number, max: number, numAfterDigit = 0) {
   return +(Math.random() * (max - min) + min).toFixed(numAfterDigit);
@@ -44,16 +46,15 @@ export function getFullServerPath(host: string, port: number) {
   return `http://${host}:${port}`;
 }
 
-// export function fillFavorites(
-//   offers: OfferEntity[] | null,
-//   user: UserEntity | null
-// ): OfferEntity[] | null {
-//   if (!user || !offers) {
-//     return offers;
-//   }
-
-//   return offers.map((offer) => {
-//     offer.isFavorite = user.favorites.includes(offer.id);
-//     return offer;
-//   });
-// }
+export function fillFavorites(
+  offers: OfferEntity[] | null,
+  user: UserEntity | null
+): OfferEntity[] | null {
+  if (!user || !offers) {
+    return offers;
+  }
+  return offers.map((offer) => {
+    offer.isFavorite = user.favorites.includes(offer.id);
+    return offer;
+  });
+}

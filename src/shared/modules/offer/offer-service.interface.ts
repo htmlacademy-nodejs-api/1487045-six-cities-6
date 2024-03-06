@@ -14,8 +14,7 @@ export interface OfferService extends DocumentExists {
     offerId: string,
     statistics: CommentStatistics
   ): Promise<DocumentType<OfferEntity> | null>;
-  exists(documentId: string): Promise<boolean>;
-  findFavoriteOffers(limit?: number): Promise<DocumentType<OfferEntity>[]>;
+  exists(offerId: string): Promise<boolean>;
+  checkUserPermisson(authorId: string, offerId: string): Promise<boolean>;
+  findOffersByIds(offersIds: string[]): Promise<DocumentType<OfferEntity>[]>;
 }
-
-// TODO:  Добавление/удаление оффера в/из избранное ?

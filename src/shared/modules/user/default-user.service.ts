@@ -1,5 +1,5 @@
 import { DocumentType, types } from '@typegoose/typegoose';
-import { CreateUserDto, DEFAULT_AVATAR_FILE_NAME, UserEntity, UserService } from './index.js';
+import { CreateUserDto, UpdateUserDto, UserEntity, UserService } from './index.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/component.enum.js';
 import { Logger } from '../../libs/logger/index.js';
@@ -12,7 +12,7 @@ export class DefaultUserService implements UserService {
   ) {}
 
   public async create(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>> {
-    const user = new UserEntity({ ...dto, avatar: DEFAULT_AVATAR_FILE_NAME });
+    const user = new UserEntity(dto);
     user.setPassword(dto.password, salt);
 
     const result = await this.userModel.create(user);
@@ -37,5 +37,20 @@ export class DefaultUserService implements UserService {
     }
 
     return this.create(dto, salt);
+  }
+
+  public updateById(userId: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(userId, dto, { new: true })
+      .populate(['favorites'])
+      .exec();
+  }
+
+  public async addOfferToFavorites(userId: string, offerId: string): Promise<unknown> {
+    return this.userModel.findByIdAndUpdate(userId, { $push: { favorites: offerId } }).exec();
+  }
+
+  public async deleteFromFavorites(userId: string, offerId: string): Promise<unknown> {
+    return this.userModel.findByIdAndUpdate(userId, { $pull: { favorites: offerId } }).exec();
   }
 }

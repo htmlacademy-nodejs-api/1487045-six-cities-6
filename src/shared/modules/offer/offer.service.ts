@@ -70,9 +70,18 @@ export class DefaultOfferService implements OfferService {
       .exec();
   }
 
-  public async findFavoriteOffers(): Promise<DocumentType<OfferEntity>[]> {
-    //TODO: Доделать получение Favorites
-    //
-    return await this.offerModel.find();
+  public async checkUserPermisson(authorId: string, offerId: string): Promise<boolean> {
+    const offer = await this.findById(offerId);
+    const result = offer?.authorId.id === authorId;
+    return result;
+  }
+
+  public async findOffersByIds(offersIds: string[]): Promise<DocumentType<OfferEntity>[]> {
+    return this.offerModel
+      .find({ _id: { $in: offersIds } })
+      .populate(['authorId'])
+      .limit(DEFAULT_OFFER_COUNT)
+      .sort({ createdAt: SortType.Down })
+      .exec();
   }
 }

@@ -2,7 +2,14 @@
 import { Ref, defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 import { UserEntity } from '../user/user.entity.js';
 import { Amenity, City, Location, OfferType } from '../../types/index.js';
-import { DescriptionLength, BedroomsAmount, GuestsAmount, PriceRange, TitleLength, Rating } from '../../constants.js';
+import {
+  DescriptionLength,
+  BedroomsAmount,
+  GuestsAmount,
+  PriceRange,
+  TitleLength,
+  Rating,
+} from '../../constants.js';
 
 export interface OfferEntity extends defaultClasses.Base {}
 
@@ -40,6 +47,9 @@ export class OfferEntity extends defaultClasses.TimeStamps {
 
   @prop({ required: true })
   public isPremium: boolean;
+
+  @prop({ required: false })
+  public isFavorite!: boolean;
 
   @prop({ min: Rating.Min, max: Rating.Max, default: null })
   public rating: number;
