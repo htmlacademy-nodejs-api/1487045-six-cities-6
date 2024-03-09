@@ -22,10 +22,10 @@ npm install
 3. `DB_USER=admin` - Имя пользователя для MongoDB
 4. `DB_PASSWORD=test` - Пароль к базе данных MongoDB
 5. `DB_PORT=27017` - Порт для подключения к MongoDB
-6. `UPLOAD_DIRECTORY` - Расположение папки "upload"
-7. `STATIC_DIRECTORY_PATH` - Расположение папки "static"
-8. `SALT` - Соль для хэширования пароля
-9. `JWT_SECRET` - Секретный ключ для подписи JSON веб-токена (JWT)
+6. `UPLOAD_DIRECTORY=/home/admin/six-cities/upload` - Расположение папки "upload"
+7. `STATIC_DIRECTORY_PATH=/home/admin/six-cities/static` - Расположение папки "static"
+8. `SALT=secret` - Соль для хэширования пароля
+9. `JWT_SECRET=secretString` - Секретный ключ для подписи JSON веб-токена (JWT)
 
 ### Разверните базу данных
 
