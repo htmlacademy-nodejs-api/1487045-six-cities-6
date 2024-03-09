@@ -44,3 +44,8 @@ export enum PasswordLength {
   Min = 6,
   Max = 12,
 }
+
+export enum WeekDays {
+  Min = 1,
+  Max = 7,
+}

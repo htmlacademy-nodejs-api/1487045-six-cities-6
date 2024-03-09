@@ -1,22 +1,16 @@
 import * as Mongoose from 'mongoose';
-import { DatabaseClient } from './index.js';
+import { DatabaseClient, RetrySettings } from './index.js';
 import { inject, injectable } from 'inversify';
 import { Component } from '../../types/index.js';
 import { Logger } from '../logger/index.js';
 import { setTimeout } from 'node:timers/promises';
-
-const RETRY_COUNT = 5;
-const RETRY_TIMEOUT = 1000;
 
 @injectable()
 export class MongoDatabaseClient implements DatabaseClient {
   private mongoose: typeof Mongoose;
   private isConnected: boolean;
 
-
-  constructor(
-    @inject(Component.Logger) private readonly logger: Logger
-  ){
+  constructor(@inject(Component.Logger) private readonly logger: Logger) {
     this.isConnected = false;
   }
 
@@ -24,7 +18,7 @@ export class MongoDatabaseClient implements DatabaseClient {
     return this.isConnected;
   }
 
-  public async connect(uri:string): Promise<void> {
+  public async connect(uri: string): Promise<void> {
     if (this.isConnectedToDatabase()) {
       throw new Error('MongoDB is already connected.');
     }
@@ -32,7 +26,7 @@ export class MongoDatabaseClient implements DatabaseClient {
     this.logger.info('Trying to connect to MongoDB...');
 
     let attempt = 0;
-    while (attempt < RETRY_COUNT) {
+    while (attempt < RetrySettings.RETRY_COUNT) {
       try {
         this.mongoose = await Mongoose.connect(uri);
         this.isConnected = true;
@@ -41,12 +35,13 @@ export class MongoDatabaseClient implements DatabaseClient {
       } catch (error) {
         attempt++;
         this.logger.error(`Failed to connect to the database. Attempt ${attempt}`, error as Error);
-        await setTimeout(RETRY_TIMEOUT);
+        await setTimeout(RetrySettings.RETRY_TIMEOUT);
       }
     }
 
-    throw new Error(`Unable to establish database connection after ${RETRY_COUNT} attempts.`);
-
+    throw new Error(
+      `Unable to establish database connection after ${RetrySettings.RETRY_COUNT} attempts.`
+    );
   }
 
   public async disconnect(): Promise<void> {

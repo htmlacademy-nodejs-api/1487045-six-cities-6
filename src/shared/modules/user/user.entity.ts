@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
-import { defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
+import {
+  Severity,
+  defaultClasses,
+  getModelForClass,
+  modelOptions,
+  prop,
+} from '@typegoose/typegoose';
 import { User, UserType } from '../../types/index.js';
 import { createSHA256 } from '../../helpers/index.js';
 import { DEFAULT_AVATAR_FILE_NAME } from './user.constant.js';
@@ -10,6 +16,9 @@ export interface UserEntity extends defaultClasses.Base {}
   schemaOptions: {
     collection: 'users',
     timestamps: true,
+  },
+  options: {
+    allowMixed: Severity.ALLOW,
   },
 })
 export class UserEntity extends defaultClasses.TimeStamps implements User {
